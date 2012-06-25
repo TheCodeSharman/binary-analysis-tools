@@ -12,7 +12,7 @@ import Text.XML.HXT.Core
 import Data.Char (isDigit)
 
 options :: [SysConfig]
-options = [ withValidate False ]
+options = [ withValidate yes, withCheckNamespaces yes ]
  
 -- this function loads and parses the binary template and returns a list
 -- of BinaryTemplate's found in the xml file
@@ -29,8 +29,6 @@ loadBinaryTemplateX :: IOSLA (XIOState ()) XmlTree XmlTree
 loadBinaryTemplateX loader
         = runX ( 
                 loader 
-                 >>> propagateNamespaces
-                >>> uniqueNamespaces
                 >>> getChildren             -- find the document elements
                 >>> isElem                                        
                 >>> parseBinaryTemplate )

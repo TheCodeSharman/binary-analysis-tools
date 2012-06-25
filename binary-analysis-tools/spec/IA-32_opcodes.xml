@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alt xmlns="http://twistedchimney.net/BinaryTemplate">
+
+	<!--
+		Instructions listing in alphabetical order as in Intel reference
+	-->
+	<simple label="AAA" opcode="0x37" />
+	<adjust label="AAD" opcode="0xd5" />
+	<adjust label="AAM" opcode="0xd5" />
+	<simple label="AAS" opcode="0x3f" />
+	<data label="ADC" imm8="0x14" imm32="0x15" sub="0x02" rr8="0x10" rr32="0x11" rrm8="0x12" rrm32="0x13" />
+	<data label="ADD" imm8="0x4" imm32="0x5" sub="0" rr8="0x10" rr32="0x1" rrm8="0x2" rrm32="0x3" />
+	<!-- 
+		ADDPD
+		ADDPS
+		ADDSD
+		ADDSS -->
+	<data label="AND" imm8="0x24" imm32="0x25" sub="4" rr8="0x20" rr32="0x21" rrm8="0x22" rrm32="0x23" />
+	<!--
+		ANDPD ANDPS ANDNPD ANDNPS ARPL BOUND BSF BSR BSWAP BT BTC BTR BTS CALL
+		CBW CDQ CLC CLD CLFUSH
+	-->
+	<simple label="CLI" opcode="0xFA" />
+	<simple2 label="CLTS" opcode="0x0F" opcode2="0x06" />
+	<simple label="CMC" opcode="0xF5" />
+	<!-- 
+		CMOVcc
+	 -->
+	<data label="CMP" imm8="0x3c" imm32="0x3d" sub="7" rr8="0x38" rr32="0x39" rrm8="0x3a" rrm32="0x3b" />
+	<!--
+		CMPPD CMPPS CMPS CMPSB CMPSW CMPSD CMPSS CMPXCHG CMPXCHG8B COMISD
+		COMISS
+	-->
+	<simple2 label="CPUID" opcode="0x0f" opcode2="0xa2" />
+	<!--
+		CVTQ2PD CVTDQ2PD CVTDQ2PS CVTPD2DQ CVTPD2PI CVTPD2PS CVTPI2PD CVTPI2PS
+		CVTPS2DQ CVTPS2DQ CVTPS2PD CVTPS2PI CVTSD2SI CVTSD2SS CVTSI2SD
+		CVTSI2SS CVTSS2SD CVTSS2SI CVTTPD2PI CVTTPD2DQ CVTTPS2PI CVTTSD2SI
+		CVTTSS2SI
+	-->
+	<simple label="CDQ" opcode="0x99" />
+	<!-- 
+	 	CWDE
+	  -->
+	<simple label="DAA" opcode="0x27" />
+	<simple label="DAS" opcode="0x2f" />
+	<!-- 
+	 	DEC
+	 	DIV
+	 	DIVPD
+	 	DIVPS
+	 	DIVSD
+	 	DIVSS-->
+	<simple2 label="EMMS" opcode="0x0f" opcode2="0x77" />
+	<!-- 
+	    ENTER
+	  -->
+	<simple2 label="F2XM1" opcode="0xd9" opcode2="0xf0" />
+	<simple2 label="FABS" opcode="0xd9" opcode2="0xe1" />
+	<!-- 
+	 	FADD
+	 	FADDP
+	 	FIADD
+	 	FBLD
+	 	FBSTP
+	  -->
+	<simple2 label="FCHS" opcode="0xd9" opcode2="0xe0" />
+	<simple3 label="FCLEX" opcode="0x9b" opcode2="0xdb" opcode3="0xe2" />
+	<!--
+		FCMOVcc FCOM FCOMP FCOMPP FCOMI FCOMIP FUCOMI FUCOMIP
+	-->
+	<simple2 label="FCOS" opcode="0xd9" opcode2="0xFF" />
+	<simple2 label="FDECSTP" opcode="0xd9" opcode2="0xf6" />
+	<!--
+		FDIV FDIVP FIDIV FDIVR FDIVRP FIDIVR FFREE FICOM FICOMP FILD FINCSTP
+		FINIT FNINIT FIST FISTP FLD
+	-->
+	<simple2 label="FLD1" opcode="0xd9" opcode2="0xe8" />
+	<simple2 label="FLDL2T" opcode="0xd9" opcode2="0xe9" />
+	<simple2 label="FLDL2E" opcode="0xd9" opcode2="0xea" />
+	<simple2 label="FLDPI" opcode="0xd9" opcode2="0xeb" />
+	<simple2 label="FLDLG2" opcode="0xd9" opcode2="0xec" />
+	<simple2 label="FLDLN2" opcode="0xd9" opcode2="0xed" />
+	<simple2 label="FLDZ" opcode="0xd9" opcode2="0xee" />
+	<!--
+		FLDCW FLDENV FMUL FMULP FIMUL
+	-->
+	<simple2 label="FNOP" opcode="0xd9" opcode2="0xd0" />
+	<simple2 label="FPATAN" opcode="0xd9" opcode2="0xf3" />
+	<simple2 label="FPREM" opcode="0xd9" opcode2="0xf8" />
+	<simple2 label="FPREM1" opcode="0xd9" opcode2="0xf5" />
+	<simple2 label="FPTAN" opcode="0xd9" opcode2="0xf2" />
+	<simple2 label="FRNDINT" opcode="0xd9" opcode2="0xfc" />
+	<!-- 
+      	  FRSTOR
+      	  FSAVE
+      	  FNSAVE
+      	 -->
+	<simple2 label="FSCALE" opcode="0xd9" opcode2="0xfd" />
+	<simple2 label="FSIN" opcode="0xd9" opcode2="0xfe" />
+	<simple2 label="FSINCOS" opcode="0xd9" opcode2="0xfb" />
+	<simple2 label="FSQRT" opcode="0xd9" opcode2="0xfa" />
+	<!--
+		FST FSTP FSTCW FNSTCW FSTENV FNSTENV FSTSW FNSTSW FSUB FSUBP FISUB
+		FSUBR FSUBRP FISUBR
+	-->
+	<simple2 label="FTST" opcode="0xd9" opcode2="0xe4" />
+	<!-- 
+      	FUCOM
+      	FUCOMP
+      	FUCOMPP
+      	FWAIT
+      	 -->
+	<simple2 label="FXAM" opcode="0xd9" opcode2="0xe5" />
+	<!-- 
+      	 FXCH
+      	 FXRSTOR
+      	 FXSAVE
+      	  -->
+	<simple2 label="FXTRACT" opcode="0xd9" opcode2="0xf4" />
+	<simple2 label="FYL2X" opcode="0xd9" opcode2="0xf1" />
+	<simple2 label="FYL2XP1" opcode="0xd9" opcode2="0xf9" />
+	<simple label="HLT" opcode="0xf4" />
+	<!--
+		IDIV IMUL IN INC INS INSB INSW INSD INT INTO
+	-->
+	<simple2 label="INVD" opcode="0x0F" opcode2="0x08" />
+	<!-- 
+		INVLPG
+		 -->
+	<simple label="IRETD" opcode="0xcf" />
+	<!-- 
+		Jcc
+		JMP
+		 -->
+	<simple label="LAHF" opcode="0x9f" />
+	<!-- 
+		LAR
+		LDMXCSR
+		LDS
+		LES
+		LFS
+		LGS
+		LSS
+		LEA
+		 -->
+	<simple label="LEAVE" opcode="0xc9" />
+	<!-- 
+		LFENCE
+		LGDT
+		LIDT
+		LLDT
+		LMSW
+		 -->
+	<simple label="LOCK" opcode="0xf0" />
+	<!--
+		LODS LODSB LODSW LODSD LOOP LOOPcc LSL LTR MASKMOVDQU MASKMOVQ MAXPD
+		MAXPS MAXSD MAXSS MFENCE MINPD MINPS MINSD MINSS MOV MOVAPD MOVAPS
+		MOVD MOVDQA MOVDQU MOVDQ2Q MOVHLPS MOVHPD MOVHPS MOVLHPS MOVLPD MOVLPS
+		MOVMSKPD MOVMSKPS MOVNTDQ MOVNTI MOVNTPD MOVNTPS MOVNTQ MOVQ MOVQ2DQ
+		MOVS MOVSB MOVSW MOVSD MOVSS MOVSX MOVUPD MOVUPS MOVZX MUL MULPD MULPS
+		MULSD MULSS NEG
+	-->
+	<simple label="NOP" opcode="0x90" />
+	<!-- 
+		NOT
+		 -->
+	<data label="OR" imm8="0x0c" imm32="0x0d" sub="1" rr8="0x08" rr32="0x09" rrm8="0x0a" rrm32="0x0b" />
+	<!--
+		ORPD ORPS OUT OUTS OUTSB OUTSW OUTSD PACKSSWB PACKSSDW PACKUSWB PADDB
+		PADDW PADDD PADDQ PADDSB PADDSW PADDUSB PADDUSW PAND PANDN
+	-->
+	<simple2 label="PAUSE" opcode="0xf3" opcode2="0x90" />
+	<!--
+		PAVGB PAVGW PCMPEQB PCMPEQW PCMPEQD PCMPGTB PCMPGTW PCMPGTD PEXTRW
+		PINSRW PMADDWD PMAXSW PMAXUB PMINSW PMINUB PMOVMSKB PMULHUW PMULHW
+		PMULLW PMULUDQ POP POPA POPAD POPF POPFD POR PREFETCH0 PREFETCH1
+		PREFETCH2 PREFETCHNTA PSADBW PSHUFD PSHUFHW PSHUFLW PSHUFW PSLLDQ
+		PSLLW PSLLD PSLLQ PSRAQ PSRAD PSRLDQ PSRLW PSRLD PSRLQ PSUBB PSUBW
+		PSUBD PSUBQ PSUBSB PSUBSW PSUBUSB PSUBUSW PUNPCKHBW PUNPCKHWD
+		PUNPCKHDQ PUNPCKHQDQ PUNPCKLBW PUNPCKLWD PUNPCKLDQ PUNPCKLQDQ PUSH
+		PUSHA PUSHAD PUSHF PUSHFD PXOR RCL RCR ROL ROR RCPPS RDMSR RDPMC RDTSC
+		REP REPE REPZ REPNE REPNZ RET
+	-->
+	<simple2 label="RSM" opcode="0x0F" opcode2="0xAA" />
+	<!-- 
+	RSQRTPS
+	RSQRTSS
+	SAHF
+	SAL
+	SAR
+	SHL
+	SHR
+	 -->
+	<data label="SBB" imm8="0x1c" imm32="0x1d" sub="3" rr8="0x18" rr32="0x19" rrm8="0x1a" rrm32="0x1b" />
+	<!--
+		SCAS SCASB SCASW SCASD SETcc SFENCE SGDT SIDT SHLD SHRD SHUFPD SHUFPS
+		SLDT SMSW SQRTPD SQRTPS SQRTSD SQRTSS
+	-->
+	<simple label="STC" opcode="0xf9" />
+	<simple label="STD" opcode="0xfd" />
+	<simple label="STI" opcode="0xfb" />
+	<!-- 
+	STMXCSR
+	STOS
+	STOSB
+	STOSW
+	STOSD
+	STR
+	 -->
+	<data label="SUB" imm8="0x2c" imm32="0x2d" sub="5" rr8="0x28" rr32="0x29" rrm8="0x2a" rrm32="0x2b" />
+	<!-- 
+	SUBPD
+	SUBPS
+	SUBSD
+	SUBSS
+	 -->
+	<simple2 label="SYSENTER" opcode="0x0f" opcode2="0x34" />
+	<simple2 label="SYSEXIT" opcode="0x0f" opcode2="0x35" />
+	<!-- 
+	TEST
+	UCOMISD
+	UCOMISS
+	 -->
+	<simple2 label="UD2" opcode="0x0f" opcode2="0x0b" />
+	<!-- 
+	UNPCKHPD
+	UNPCKHPS
+	UNPCKLPD
+	UNPCKLPS
+	VERR
+	VERW
+	-->
+	<simple label="FWAIT" opcode="0x9b" />
+	<simple2 label="WBINVD" opcode="0x0f" opcode2="0x09" />
+	<simple2 label="WRMSR" opcode="0x0f" opcode2="0x30" />
+	<!-- 
+	XADD
+	XCHG
+	 -->
+	<simple label="XLATB" opcode="0xd7" />
+	<data label="XOR" imm8="0x34" imm32="0x35" sub="6" rr8="0x30" rr32="0x31" rrm8="0x32" rrm32="0x33" />
+	<!-- 
+	XORPD
+	XORPS
+	 -->
+
+	<!--  template for simple instructions -->
+	<def name="simple" params="opcode">
+		<prefixes />
+		<int8u match="opcode" />
+	</def>
+
+	<def name="simple2" params="opcode,opcode2">
+		<prefixes />
+		<int8u match="opcode" />
+		<int8u match="opcode2" />
+	</def>
+
+	<def name="simple3" params="opcode,opcode2,opcode3">
+		<prefixes />
+		<int8u match="opcode" />
+		<int8u match="opcode2" />
+		<int8u match="opcode3" />
+	</def>
+
+	<!-- template for adjust instructions -->
+	<def name="adjust" params="opcode">
+		<prefixes />
+		<int8u match="opcode" />
+		<int8u label="base" /> <!-- mnenomic only valid when base == 0x0A -->
+	</def>
+
+	<!-- template for data processing instructions -->
+	<def name="data" params="imm8,imm32,sub,rr8,rr32,rrm8,rrm32">
+		<prefixes />
+		<alt>
+			<alImm8 opcode="imm8" />
+			<eaxImm32 opcode="imm32" />
+			<rm8Imm8 opcode="0x80" subopcode="sub" />
+			<rm32Imm32 opcode="0x81" subopcode="sub" />
+			<rm8Imm32 opcode="0x83" subopcode="sub" />
+			<rm8r8 opcode="rr8" />
+			<rm32r32 opcode="rr32" />
+			<r8rm8 opcode="rrm8" />
+			<r32rm32 opcode="rrm32" />
+		</alt>
+	</def>
+
+	<!-- define some simple types -->
+	<def name="int8s">
+		<bits type="int" width="8" sign="signed" endian="little" />
+	</def>
+
+	<def name="int32s">
+		<bits type="int" width="32" sign="signed" endian="little" />
+	</def>
+
+	<def name="int8u">
+		<bits type="int" width="8" sign="unsigned" endian="little" />
+	</def>
+
+	<!--
+		the empty template, used to make optional elements by listed as the
+		last alternative
+	-->
+	<def name="empty" />
+
+	<!-- possible instruction prefix -->
+	<def name="prefixes">
+		<rep n="4">
+			<alt>
+				<!-- lock and repeat prefixes -->
+				<alt>
+					<int8u match="0xf0" label="prefix/lock" />
+					<int8u match="0xf2" label="prefix/repne" />
+					<int8u match="0xf3" label="prefix/rep" />
+				</alt>
+
+				<!-- segment overrides -->
+				<alt>
+					<int8u match="0x2e" label="prefix/override/cs" />
+					<int8u match="0x36" label="prefix/override/ss" />
+					<int8u match="0x3e" label="prefix/override/ds" />
+					<int8u match="0x26" label="prefix/override/es" />
+					<int8u match="0x64" label="prefix/override/fs" />
+					<int8u match="0x65" label="prefix/override/gs" />
+				</alt>
+
+				<!-- operand size override -->
+				<alt>
+					<int8u match="0x66" label="prefix/override/operand" />
+				</alt>
+
+				<!-- address size override -->
+				<alt>
+					<int8u match="0x67" label="prefix/override/address" />
+				</alt>
+
+				<empty />
+			</alt>
+		</rep>
+	</def>
+
+
+	<!-- template for addressing modes -->
+	<def name="alImm8" params="opcode">
+		<int8u match="opcode" />
+		<int8s label="imm8" />
+	</def>
+
+	<def name="eaxImm32" params="opcode">
+		<int8u match="opcode" />
+		<int32s label="imm32" />
+	</def>
+
+	<def name="rm8Imm8" params="opcode,subopcode">
+		<int8u match="opcode" />
+		<modRmSub subopcode="subopcode" />
+		<int8s label="imm8" />
+	</def>
+
+	<def name="rm32Imm32" params="opcode,subopcode">
+		<int8u match="opcode" />
+		<modRmSub subopcode="subopcode" />
+		<int32s label="imm32" />
+	</def>
+
+	<def name="rm8Imm32" params="opcode,subopcode">
+		<int8u match="opcode" />
+		<modRmSub subopcode="subopcode" />
+		<int32s label="imm32" />
+	</def>
+
+	<!--
+		the following differ only in the width of the memory or width of
+		register
+	-->
+	<def name="rm8r8" params="opcode">
+		<int8u match="opcode" />
+		<modRm />
+	</def>
+
+	<def name="rm32r32" params="opcode">
+		<int8u match="opcode" />
+		<modRm />
+	</def>
+
+	<def name="r8rm8" params="opcode">
+		<int8u match="opcode" />
+		<modRm />
+	</def>
+
+	<def name="r32rm32" params="opcode">
+		<int8u match="opcode" />
+		<modRm />
+	</def>
+
+	<!-- modrm templates -->
+	<def name="modRmSub" params="subopcode">
+		<bits type="int" width="2" sign="unsigned" endian="little" label="mod" />
+		<bits type="int" width="3" sign="unsigned" endian="little" match="subopcode" />
+		<bits type="int" width="3" sign="unsigned" endian="little" label="rm" />
+		<modRmDetail mod="mod" rm="rm" />
+	</def>
+
+	<def name="modRm">
+		<bits type="int" width="2" sign="unsigned" endian="little" label="mod" />
+		<bits type="int" width="3" sign="unsigned" endian="little" label="reg" />
+		<bits type="int" width="3" sign="unsigned" endian="little" label="rm" />
+		<modRmDetail mod="mod" rm="rm" />
+	</def>
+
+	<def name="modRmDetail" params="rm,mod">
+		<alt select="mod">
+			<alt case="0x0" select="rm">
+				<sib case="0x4" />
+				<int32s case="0x5" label="disp32" />
+				<empty />
+			</alt>
+			<alt case="0x1" select="rm">
+				<sib case="0x4">
+					<int8s label="disp8" />
+				</sib>
+				<int8s label="disp8" />
+			</alt>
+			<alt case="0x2" select="rm">
+				<sib case="0x4">
+					<int32s label="disp32" />
+				</sib>
+				<int32s label="disp32" />
+			</alt>
+			<empty />
+		</alt>
+	</def>
+
+	<def name="sib">
+		<bits type="int" width="2" sign="unsigned" endian="little" label="scale" />
+		<bits type="int" width="3" sign="unsigned" endian="little" label="index" />
+		<bits type="int" width="3" sign="unsigned" endian="little" label="base" />
+	</def>
+</alt>

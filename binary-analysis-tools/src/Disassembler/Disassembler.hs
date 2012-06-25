@@ -26,7 +26,7 @@ intelArchitecture32::Disassembler
 intelArchitecture32 
         = unsafePerformIO $
                 do
-                        bt <- loadBinaryTemplateFromFile "/Users/msharman/Documents/workspace/machineDesc/IA-32_opcodes.xml"
+                        bt <- loadBinaryTemplateFromFile "../spec/IA-32_opcodes.xml"
                         return Disassembler { template = head bt, decoder = compile (head bt) }
 
 
