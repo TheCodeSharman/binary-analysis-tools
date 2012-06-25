@@ -23,13 +23,8 @@ isEmpty _ = False
 
 subResultTrees::String->ResultTree->[ResultTree]
 subResultTrees s rt@(ResultTree lbl rs)
-        = if lbl == s 
-                then 
-                        [rt] 
-                else 
-                        concat $ map (subResultTrees s) rs
+        = if lbl == s then [rt] else  concatMap (subResultTrees s) rs
 subResultTrees _ _ = []
-
 
 findLastResult::[ResultTree]->Maybe BinaryField
 findLastResult [] = Nothing

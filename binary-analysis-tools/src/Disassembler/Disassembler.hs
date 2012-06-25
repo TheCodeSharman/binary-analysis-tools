@@ -1,10 +1,10 @@
 module Disassembler.Disassembler (
-                decode, decodeList,
-                Disassembler,
-                intelArchitecture32,
-                module BitStream.BitStream
-                )
-where
+        decode, 
+        decodeList,
+        Disassembler,
+        intelArchitecture32,
+        module BitStream.BitStream
+        ) where
 
 import BinaryTemplate.ResultTree
 import BinaryTemplate.Evaluate
@@ -12,7 +12,6 @@ import BinaryTemplate.Parse
 import BinaryTemplate.AbstractSyntax
 
 import BitStream.BitStream
-import qualified Data.ByteString.Lazy
 
 import System.IO.Unsafe( unsafePerformIO )
 
@@ -26,7 +25,7 @@ intelArchitecture32::Disassembler
 intelArchitecture32 
         = unsafePerformIO $
                 do
-                        bt <- loadBinaryTemplateFromFile "../spec/IA-32_opcodes.xml"
+                        bt <- loadBinaryTemplateFromFile "spec/IA-32_opcodes.xml"
                         return Disassembler { template = head bt, decoder = compile (head bt) }
 
 

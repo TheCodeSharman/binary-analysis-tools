@@ -6,16 +6,17 @@ import Test.HUnit
 
 import BinaryTemplate.AbstractSyntax
 import BinaryTemplate.Parse
-import Control.Arrow.ListArrow 
-import Text.XML.HXT.Core
 
+run :: IO Counts
 run = runTestTT tests
 
+parseTest :: String -> [BinaryTemplate] -> IO ()
 parseTest xml expect
  = do
                 res <- loadBinaryTemplateFromString xml
                 assertEqual "Result not equal" expect res
          
+tests :: Test
 tests = TestList [
 
         "Test bits parse" ~: parseTest 

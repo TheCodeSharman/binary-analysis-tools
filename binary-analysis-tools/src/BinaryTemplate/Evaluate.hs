@@ -15,7 +15,7 @@ import qualified Data.Map
 import Data.List
 import Control.Monad
 
-newtype CompiledBinTemp = CompiledBinTemp { bitStream:: (BitStream ResultTree) }
+newtype CompiledBinTemp = CompiledBinTemp { bitStream :: BitStream ResultTree }
 
 -- evaluate a self contained BinaryTemplate (no external calls)
 evaluate::BinaryTemplate->Data.ByteString.Lazy.ByteString->Maybe ResultTree
@@ -29,7 +29,7 @@ compile bt = CompiledBinTemp $ compileBT NoEScope bt
 
 -- run the provided bitstream
 execute::CompiledBinTemp->InputString->Maybe ( ResultTree, InputString )
-execute cbt is = runBS (bitStream cbt) is
+execute cbt = runBS (bitStream cbt)
 
 {- 
    The EvaluationScope keeps track of defined functions and the current
@@ -59,7 +59,7 @@ data EvaluationScope = EScope CDefMap ArgMap EvaluationScope | NoEScope
 {- The following helper functions allow access to the current scope -}
 getArgument::EvaluationScope->String->Maybe Value
 getArgument NoEScope _ = Nothing
-getArgument (EScope _ vals parent) name 
+getArgument (EScope _ vals _) name 
         = Data.Map.lookup name vals -- no recursion here by design
                 
 getArgs::EvaluationScope->ArgMap
@@ -79,13 +79,10 @@ newEScope::EvaluationScope->[Op]->ArgMap->EvaluationScope
 newEScope parent bts args 
         = EScope (compileDefs bts) args parent         
                 where
-                        compileDefs::[BinaryTemplate]->CDefMap
-                        compileDefs bts
-                                = foldr addDef Data.Map.empty bts
-                                        where
-                                                addDef (Def name params op) cdfs 
-                                                        = Data.Map.insert name (CDef params op) cdfs
-                                                        
+                    compileDefs::[BinaryTemplate]->CDefMap
+                    compileDefs = foldr addDef Data.Map.empty
+                    addDef (Def name params op) = Data.Map.insert name (CDef params op) 
+                                                    
 {- Lookup a NamedResult -}
 getNamedResult::EvaluationScope->String->ResultTree->Maybe (Either Value BinaryField)
 getNamedResult escope name rt
@@ -288,63 +285,63 @@ callTemplate escope results (Call def args fallOps lbl)
          = case getCDef escope def of
                 Just (CDef params op) 
                         -> let
-                                        toArgMap' mp [] = mp
-                                        toArgMap' mp ((n,v):as) = toArgMap' (Data.Map.insert n v mp) as
-                                        
-                                        toArgMap = toArgMap' Data.Map.empty
-                                        
-                                        -- errors on any missing formal parameters
-                                        checkParams1 [] as = toArgMap as
-                                        checkParams1 (p:ps) as 
-                                                = let
-                                                        args = toArgMap as
-                                                  in case Data.Map.lookup p args of
-                                                        Just _ -> checkParams1 ps as
-                                                        Nothing -> error ("Missing parameter '" ++ p ++ "'")
-                                        
-                                        -- errors on any unknown arguments
-                                        checkParams2 ps as 
-                                                = case Data.Map.keys as \\ ps of
-                                                        [] -> as
-                                                        ms -> error ("Unknown arguments: " ++ concat( intersperse ", " ms ))        
-                                        
-                                        -- combine both checks
-                                        checkParams ps as 
-                                                = checkParams2 ps (checkParams1 ps as)
-                
-                                        -- Any NamedResult arguments need to be retrieved now
-                                        checkedArgs 
-                                                = let
-                                                        validArgs = checkParams params args
-                                                        
-                                                        convertToValue (Left v) = v
-                                                        convertToValue (Right bf) 
-                                                                = case bf of
-                                                                        Number i -> PrimIntValue i
-                                                                        Array a -> PrimArrValue a
-                                                                
-                                                        lookupArg v
-                                                                = case v of
-                                                                        NamedResult n 
-                                                                                -> case getNamedResultList escope n results of
-                                                                                                Just v ->  convertToValue v
-                                                                                                Nothing -> error ("Unable to find named result: '" ++ n ++ "'") 
-                                                                        _ -> v
-                                                  in
-                                                           Data.Map.map lookupArg validArgs
-                                        
-                                        doTemplate = liftM (:[]) (compileBT escope2 op)
-                                                           where
-                                                             escope2 = newEScope escope [] checkedArgs
-                                in
-                                        {- when there are fallthrough operations these need to be executed in the
-                                           parent scope after the template has executed -}
-                                        case fallOps of
-                                                Seq [] -> labelResultTreesM lbl $ doTemplate
-                                                _  -> labelResultTreesM lbl $ 
-                                                                doTemplate 
-                                                                        >>= \rs -> compileBT escope fallOps        
-                                                                        >>= \r -> return (rs++[r])                                         
+                            toArgMap' mp [] = mp
+                            toArgMap' mp ((n,v):as) = toArgMap' (Data.Map.insert n v mp) as
+                            
+                            toArgMap = toArgMap' Data.Map.empty
+                            
+                            -- errors on any missing formal parameters
+                            checkParams1 [] as = toArgMap as
+                            checkParams1 (p:ps) as 
+                                    = let
+                                            args = toArgMap as
+                                      in case Data.Map.lookup p args of
+                                            Just _ -> checkParams1 ps as
+                                            Nothing -> error ("Missing parameter '" ++ p ++ "'")
+                            
+                            -- errors on any unknown arguments
+                            checkParams2 ps as 
+                                    = case Data.Map.keys as \\ ps of
+                                            [] -> as
+                                            ms -> error ("Unknown arguments: " ++ concat( intersperse ", " ms ))        
+                            
+                            -- combine both checks
+                            checkParams ps as 
+                                    = checkParams2 ps (checkParams1 ps as)
+    
+                            -- Any NamedResult arguments need to be retrieved now
+                            checkedArgs 
+                                    = let
+                                            validArgs = checkParams params args
+                                            
+                                            convertToValue (Left v) = v
+                                            convertToValue (Right bf) 
+                                                    = case bf of
+                                                            Number i -> PrimIntValue i
+                                                            Array a -> PrimArrValue a
+                                                    
+                                            lookupArg v
+                                                    = case v of
+                                                            NamedResult n 
+                                                                    -> case getNamedResultList escope n results of
+                                                                                    Just v ->  convertToValue v
+                                                                                    Nothing -> error ("Unable to find named result: '" ++ n ++ "'") 
+                                                            _ -> v
+                                      in
+                                               Data.Map.map lookupArg validArgs
+                            
+                            doTemplate = liftM (:[]) (compileBT escope2 op)
+                                               where
+                                                 escope2 = newEScope escope [] checkedArgs
+                    in
+                            {- when there are fallthrough operations these need to be executed in the
+                               parent scope after the template has executed -}
+                            case fallOps of
+                                    Seq [] -> labelResultTreesM lbl $ doTemplate
+                                    _  -> labelResultTreesM lbl $ 
+                                                    doTemplate 
+                                                            >>= \rs -> compileBT escope fallOps        
+                                                            >>= \r -> return (rs++[r])                                         
                                         
                 Nothing 
                         -> error ("Unknown template '" ++ def ++ "'")
