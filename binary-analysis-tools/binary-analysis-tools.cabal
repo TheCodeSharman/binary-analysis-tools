@@ -1,0 +1,19 @@
+name:           binary-analysis-tools
+version:        0.1
+cabal-version:  >= 1.2
+build-type:     Simple
+author:         msharman
+
+executable binary-analysis-tools
+  hs-source-dirs:  src
+  main-is:         Main.hs
+  build-depends:   
+                   base >= 4,
+                   gtk,
+                   bytestring,
+                   mtl,
+                   hxt,
+                   containers,
+                   HUnit
+  ghc-options:     -Wall
+
