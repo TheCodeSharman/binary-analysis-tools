@@ -23,7 +23,7 @@ loadBinaryTemplateFromString xml
                                             
 loadBinaryTemplateX :: IOSLA (XIOState ()) XmlTree XmlTree -> IO [BinaryTemplate]
 loadBinaryTemplateX loader
-        = runX $ loader >>> getChildren >>> isElem >>> parseBinaryTemplate
+        = runX $ loader >>> getChildren >>> isElem >>> binaryTemplateNS >>> parseBinaryTemplate
       
 {-  
     The parser proper:
@@ -31,7 +31,7 @@ loadBinaryTemplateX loader
 
 -- Parser options
 parserOptions :: [SysConfig]
-parserOptions = [ withValidate yes, withCheckNamespaces yes ]       
+parserOptions = [ withValidate yes, withCheckNamespaces yes, withRemoveWS yes ]       
 
 -- Namespace used into the BinaryTemplate files
 binaryTemplateNS::ArrowXml a => a XmlTree XmlTree
@@ -138,7 +138,7 @@ parseCall = proc call -> do
         returnA -< Call name args (Seq ops) label
             where 
                 parseArg 
-                    = ifA (hasName "label" <+> hasName "match" <+> hasName "case") 
+                    = ifA (hasName "label" <+> hasName "match" <+> hasName "case" <+> hasName "xmlns") 
                       none
                       (proc arg -> do
                                 name <- getLocalPart -< arg
@@ -148,12 +148,12 @@ parseCall = proc call -> do
 -- parse any top level {http://twistedchimney.net/BinaryTemplate} nodes
 parseBinaryTemplate :: IOSArrow XmlTree BinaryTemplate
 parseBinaryTemplate = choiceA [
-        (isElem >>> binaryTemplateNS >>> hasName "def") :-> parseDef,
-        (isElem >>> binaryTemplateNS >>> hasName "alt") :-> parseAltOrSelect,
-        (isElem >>> binaryTemplateNS >>> hasName "rep") :-> parseRep,
-        (isElem >>> binaryTemplateNS >>> hasName "bits") :-> (parseBits <+> maybeParseMatch),
-        (isElem >>> binaryTemplateNS) :-> (parseCall <+> maybeParseMatch),
-        this :-> error "embedded foreign XML currently not implemented"
+        (isElem >>> hasName "def") :-> parseDef,
+        (isElem >>> hasName "alt") :-> parseAltOrSelect,
+        (isElem >>> hasName "rep") :-> parseRep,
+        (isElem >>> hasName "bits") :-> (parseBits <+> maybeParseMatch),
+        isElem :-> (parseCall <+> maybeParseMatch),
+        this :-> error "Unkown Node"
     ] where
         maybeParseMatch = ifA (getAttrValue "match" >>> isA (=="")) none parseMatch
         parseAltOrSelect = ifA (getAttrValue "select" >>> isA (=="")) parseAlt parseSelect
