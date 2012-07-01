@@ -7,13 +7,14 @@ author:         msharman
 executable binary-analysis-tools
   hs-source-dirs:  src
   main-is:         Main.hs
-  build-depends:   
-                   base >= 4,
+  build-depends:   base >= 4,
                    gtk,
                    bytestring,
                    mtl,
                    hxt,
                    containers,
-                   HUnit
-  ghc-options:     -Wall
+                   HUnit,
+                   glade
+  ghc-options:     -Wall -fno-warn-unused-do-bind
+  other-modules:   GUI.Main
 

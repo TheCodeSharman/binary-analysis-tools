@@ -18,8 +18,8 @@ data Value =  PrimIntValue Integer
             deriving ( Show, Eq )
         
 -- An Op represents a operation                 
-data Op =   Read !Prim !String        -- read a Prim value from the stream 
-                  |        Match Value                     -- match a primitive on the last value read
+data Op =          Read Prim String        -- read a Prim value from the stream 
+                  | Match Value                     -- match a primitive on the last value read
                   | Select Value [(Value,Op)] -- select an alternative 
                   | Call String [(String,Value)] Op String  -- call a Def with a list of parameters and a list of children and insert Result
                   | Rep Int Op                                 -- repeat n times
@@ -29,10 +29,13 @@ data Op =   Read !Prim !String        -- read a Prim value from the stream
                   deriving ( Show, Eq )
                   
 isDef::Op->Bool
-isDef (Def _ _ _) = True
+isDef (Def{}) = True
 isDef _ = False
 
+returnDefs :: [Op] -> [Op]
 returnDefs = filter isDef
+
+stripDefs :: [Op] -> [Op]
 stripDefs = filter (not . isDef)
 
 -- A binary template is a synonym for an Op
