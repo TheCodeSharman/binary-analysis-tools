@@ -8,7 +8,7 @@ loadFile :: String -> IO ()
 loadFile _ = return ()  
   
 -- Configure the actions in the GUI      
-actionsSetup:: Builder -> IO ()
+actionsSetup:: Builder -> IO Window
 actionsSetup builder = do
     -- Open a file
     openFileAction <- builderGetObject builder castToAction "openFileAction"
@@ -23,7 +23,9 @@ actionsSetup builder = do
     -- Quit
     quitAction <- builderGetObject builder castToAction "quitAction"
     on quitAction actionActivated mainQuit
-    return ()
+    mainWindow <- builderGetObject builder castToWindow "mainWindow"
+    on mainWindow objectDestroy $ actionActivate quitAction
+    return mainWindow
         
 -- Load the user interface glade XML file                
 loadUserInterface :: IO Builder
@@ -31,15 +33,14 @@ loadUserInterface = do
     builder <- builderNew
     builderAddFromFile builder "rsrc/bintools.ui"
     return builder
-    
+
 -- Construct user interface and enter main loop
 runMainLoop:: IO ()
 runMainLoop = do
     -- Initialise and load user interface
     initGUI
     builder <- loadUserInterface
-    actionsSetup builder
+    mainWindow <- actionsSetup builder
     -- Open the main window
-    mainWindow <- builderGetObject builder castToWindow "mainWindow"
     widgetShowAll mainWindow
     mainGUI
