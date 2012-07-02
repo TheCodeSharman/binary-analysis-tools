@@ -2,10 +2,11 @@
 module GUI.Main where 
 
 import Graphics.UI.Gtk
+import Debug.Trace
   
 -- Load a new file
 loadFile :: String -> IO ()
-loadFile _ = return ()  
+loadFile fileName = traceIO fileName
   
 -- Configure the actions in the GUI      
 actionsSetup:: Builder -> IO Window
@@ -17,12 +18,21 @@ actionsSetup builder = do
         resp <- dialogRun fileChooserDialog
         if resp == ResponseOk
             then do
-                    loadFile "Dummy"
-                    widgetHide fileChooserDialog
-            else widgetHide fileChooserDialog    
+                widgetHide fileChooserDialog
+                Just fileName <- fileChooserGetFilename fileChooserDialog
+                loadFile fileName
+            else
+                widgetHide fileChooserDialog    
     -- Quit
     quitAction <- builderGetObject builder castToAction "quitAction"
     on quitAction actionActivated mainQuit
+    -- About box
+    aboutMenuItem <- builderGetObject builder castToMenuItem "aboutMenuItem"
+    on aboutMenuItem menuItemActivate $ do
+        aboutBox <- builderGetObject builder castToAboutDialog "aboutDialog"
+        dialogRun aboutBox
+        widgetHide aboutBox
+    -- Configure to quit application on main window close
     mainWindow <- builderGetObject builder castToWindow "mainWindow"
     on mainWindow objectDestroy $ actionActivate quitAction
     return mainWindow

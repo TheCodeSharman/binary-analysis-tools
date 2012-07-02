@@ -3,18 +3,25 @@ version:        0.1
 cabal-version:  >= 1.2
 build-type:     Simple
 author:         msharman
+data-files:     
+                rsrc/bintools.ui, 
+                spec/IA-32_opcodes.xml
 
 executable binary-analysis-tools
   hs-source-dirs:  src
   main-is:         Main.hs
-  build-depends:   base >= 4,
+  build-depends:   
+                   base >= 4,
                    gtk,
                    bytestring,
                    mtl,
                    hxt,
                    containers,
                    HUnit,
-                   glade
+                   glade,
+                   mmap
   ghc-options:     -Wall -fno-warn-unused-do-bind
-  other-modules:   GUI.Main
+  other-modules:   
+                   GUI.Main,
+                   HexDump.HexDump
 

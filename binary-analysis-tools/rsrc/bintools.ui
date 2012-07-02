@@ -12,7 +12,7 @@
     </child>
     <child>
       <object class="GtkAction" id="openFileAction">
-        <property name="label" translatable="yes">Open...</property>
+        <property name="label" translatable="yes">Open File...</property>
         <property name="short_label" translatable="yes">Open</property>
         <property name="tooltip" translatable="yes">Open a new file</property>
         <property name="stock_id">gtk-open</property>
@@ -20,14 +20,45 @@
       <accelerator key="o" modifiers="GDK_CONTROL_MASK"/>
     </child>
   </object>
+  <object class="GtkAboutDialog" id="aboutDialog">
+    <property name="can_focus">False</property>
+    <property name="border_width">5</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">mainWindow</property>
+    <property name="program_name">Binary Analysis Tools</property>
+    <property name="version">0.1</property>
+    <property name="copyright" translatable="yes">(c) Michael Sharman 2012</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox3">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area3">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkFileChooserDialog" id="fileChooser">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Open file to analyse...</property>
     <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
-    <property name="default_width">320</property>
-    <property name="default_height">260</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">mainWindow</property>
@@ -88,8 +119,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">cancelButton</action-widget>
-      <action-widget response="0">openButton</action-widget>
+      <action-widget response="-6">cancelButton</action-widget>
+      <action-widget response="-5">openButton</action-widget>
     </action-widgets>
   </object>
   <object class="GtkWindow" id="mainWindow">
@@ -118,10 +149,11 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="openFile">
+                      <object class="GtkImageMenuItem" id="openFileMenuItem">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="related_action">openFileAction</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="gtk_widget_show" swapped="no"/>
                       </object>
@@ -134,10 +166,11 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="quit">
+                      <object class="GtkImageMenuItem" id="quitMenuItem">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="related_action">quitAction</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
                     </child>
@@ -157,7 +190,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem10">
+                      <object class="GtkImageMenuItem" id="aboutMenuItem">
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -179,7 +212,6 @@
         </child>
         <child>
           <object class="GtkToolbar" id="toolBar">
-            <property name="height_request">32</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
