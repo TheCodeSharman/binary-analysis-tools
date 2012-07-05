@@ -19,7 +19,8 @@ executable binary-analysis-tools
                    containers,
                    HUnit,
                    glade,
-                   mmap
+                   mmap,
+                   gtksourceview2
   ghc-options:     -Wall -fno-warn-unused-do-bind
   other-modules:   
                    GUI.Main,

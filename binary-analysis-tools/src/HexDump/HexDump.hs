@@ -6,7 +6,7 @@
 
 -- Provides the command line interface to the hex dump
 -- module.
-module HexDump ( 
+module HexDump.HexDump ( 
     --dump, 
     --load, 
     --grep, 
@@ -17,8 +17,9 @@ module HexDump (
 import Data.Char
 import Data.Word
 import Data.Int
-import System.IO
+
 import Numeric
+
 
 import System.IO.MMap
 
@@ -48,7 +49,11 @@ word8ToAscii w
                   
                   
 readBytes::Int->BitStream [Word8]
-readBytes i = replicateM i (readBits8 8)              
+readBytes i = replicateM i (do 
+    e <- isInputEmpty 
+    if e 
+        then return 0 
+        else readBits8 8)              
                      
 -- Dumps 16 byte chunks as hex
 hexDumpLine :: BitStream String
@@ -67,17 +72,25 @@ hexDumpLine = do
            
 
 -- Dumps an entire file
-dumpAsHex :: FilePath -> Address -> Int64 -> IO ()
-dumpAsHex fp start size = 
-    let
-        hexDump' s | s <= 0 = []
-        hexDump' s = hexDumpLine : hexDump' (s - 16)
-        runDump bytes = case runBS (sequence $ hexDump' size) (createInputString bytes) of
-                            Just (r, _) -> putStrLn $ unlines r
-                            Nothing -> print "Unable to run dump"
-    in do
-        bytes <- mmapFileByteStringLazy fp (Just (start, start+size))
-        runDump bytes
+dumpAsHex :: FilePath -> Maybe (Address, Int64) -> IO String
+dumpAsHex filePath addr = do
+            bytes <- mmapFileByteStringLazy filePath loadAddress
+            runDump bytes
+        where
+            loadAddress = case addr of
+                            Just (start, size ) -> Just (start, start+size)
+                            Nothing -> Nothing
+            hexDumpLine' = 
+                isInputEmpty >>= 
+                    (\e->if e 
+                            then return [] 
+                            else 
+                                hexDumpLine >>= 
+                                    (\l -> liftM (l:) hexDumpLine'))
+           
+            runDump bytes = case runBS hexDumpLine' (createInputString bytes) of
+                                Just (r, _) -> return $ unlines r
+                                Nothing -> return ""
     
     
   {-      (case (runByteMonad strm start bytes) of

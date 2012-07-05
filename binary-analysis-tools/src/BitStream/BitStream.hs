@@ -3,7 +3,7 @@ module BitStream.BitStream (
     BitStream, littleEndian, bigEndian, createInputString, InputString,
     runBS, execBS, getBits, convertUnsignedToSigned, readBits8,
     expect, readEmpty, alternatives, alternate, 
-    readASCIIString, readUnsignedInteger, readSignedInteger
+    readASCIIString, readUnsignedInteger, readSignedInteger, isInputEmpty
   )  where
 
 import Data.ByteString.Lazy
@@ -122,3 +122,9 @@ alternatives = msum
 -- Choose between x or y depending on which is matchable
 alternate::BitStream a->BitStream a->BitStream a
 alternate = mplus
+
+-- Is the stream empty?
+isInputEmpty::BitStream Bool
+isInputEmpty = do
+            (_,_,bs)<-get
+            return $ null bs

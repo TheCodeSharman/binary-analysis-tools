@@ -2,11 +2,20 @@
 module GUI.Main where 
 
 import Graphics.UI.Gtk
-import Debug.Trace
+import Graphics.UI.Gtk.SourceView.SourceView
+import Graphics.UI.Gtk.SourceView.SourceBuffer
+
+import HexDump.HexDump
   
 -- Load a new file
-loadFile :: String -> IO ()
-loadFile fileName = traceIO fileName
+loadFile :: Builder -> String -> IO ()
+loadFile builder fileName = do
+    view <- builderGetObject builder castToSourceView "fileView"
+    buffer <- sourceBufferNew Nothing
+    string <- dumpAsHex fileName Nothing
+    textBufferSetText buffer string
+    textViewSetBuffer view buffer       
+    
   
 -- Configure the actions in the GUI      
 actionsSetup:: Builder -> IO Window
@@ -20,7 +29,7 @@ actionsSetup builder = do
             then do
                 widgetHide fileChooserDialog
                 Just fileName <- fileChooserGetFilename fileChooserDialog
-                loadFile fileName
+                loadFile builder fileName
             else
                 widgetHide fileChooserDialog    
     -- Quit

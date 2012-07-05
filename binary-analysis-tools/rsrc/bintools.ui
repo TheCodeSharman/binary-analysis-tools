@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires gtksourceview 0.0 -->
   <!-- interface-naming-policy toplevel-contextual -->
   <object class="GtkActionGroup" id="actions">
-    <child>
-      <object class="GtkAction" id="quitAction">
-        <property name="label" translatable="yes">Quit</property>
-        <property name="stock_id">gtk-quit</property>
-      </object>
-      <accelerator key="q" modifiers="GDK_CONTROL_MASK"/>
-    </child>
     <child>
       <object class="GtkAction" id="openFileAction">
         <property name="label" translatable="yes">Open File...</property>
@@ -18,6 +12,13 @@
         <property name="stock_id">gtk-open</property>
       </object>
       <accelerator key="o" modifiers="GDK_CONTROL_MASK"/>
+    </child>
+    <child>
+      <object class="GtkAction" id="quitAction">
+        <property name="label" translatable="yes">Quit</property>
+        <property name="stock_id">gtk-quit</property>
+      </object>
+      <accelerator key="q" modifiers="GDK_CONTROL_MASK"/>
     </child>
   </object>
   <object class="GtkAboutDialog" id="aboutDialog">
@@ -240,9 +241,14 @@
             <property name="can_focus">True</property>
             <property name="shadow_type">in</property>
             <child>
-              <object class="GtkViewport" id="viewport1">
+              <object class="GtkSourceView" id="fileView">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can_focus">True</property>
+                <property name="left_margin">2</property>
+                <property name="right_margin">2</property>
+                <property name="tab_width">4</property>
+                <property name="auto_indent">True</property>
+                <property name="indent_on_tab">False</property>
               </object>
             </child>
           </object>
