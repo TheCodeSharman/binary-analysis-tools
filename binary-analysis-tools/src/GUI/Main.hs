@@ -38,7 +38,7 @@ loadFile builder fileName = do
     view2 <- builderGetObject builder castToTextView "textview2"
     buffer2 <- textBufferNew Nothing
     editorInit TextEditor buffer2
-    start2 <- textBufferGetStartIter buffer
+    start2 <- textBufferGetStartIter buffer2
     editorInsertAt TextEditor 
         binFile (head $ getBinarySections binFile) 
         buffer2 start2 
