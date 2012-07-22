@@ -7,6 +7,7 @@ import BinaryEditor.UnknownBinaryFile
 
 import GUI.RegionEditor
 import GUI.HexEditor 
+import GUI.TextEditor
   
 -- Create A View
 --buildBinaryView :: Builder -> 
@@ -27,10 +28,8 @@ loadFile builder fileName = do
     editorInit HexEditor buffer
     start <- textBufferGetStartIter buffer
     editorInsertAt HexEditor 
-        binFile 
-        (head $ getBinarySections binFile) 
-        start 
-        buffer 
+        binFile (head $ getBinarySections binFile) 
+        buffer start 
         
     -- Attach the buffer to the view
     textViewSetBuffer view buffer
@@ -38,8 +37,11 @@ loadFile builder fileName = do
     -- Second text view: editable version of first
     view2 <- builderGetObject builder castToTextView "textview2"
     buffer2 <- textBufferNew Nothing
-    bytes <- readFile fileName
-    textBufferSetText buffer2 bytes
+    editorInit TextEditor buffer2
+    start2 <- textBufferGetStartIter buffer
+    editorInsertAt TextEditor 
+        binFile (head $ getBinarySections binFile) 
+        buffer2 start2 
     textViewSetBuffer view2 buffer2
 
 -- Configure the actions in the GUI      
