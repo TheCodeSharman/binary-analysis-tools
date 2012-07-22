@@ -1,7 +1,7 @@
 
 module BinaryEditor.UnknownBinaryFile where
 
-import BinaryEditor.BinaryEditor
+import BinaryEditor.BinaryFile
 import BitStream.HexDump
 
 import qualified Data.ByteString as BS

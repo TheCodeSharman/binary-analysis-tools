@@ -1,4 +1,4 @@
-module BinaryEditor.BinaryEditor where
+module BinaryEditor.BinaryFile where
 
 import Data.Int
 import qualified Data.ByteString as BS

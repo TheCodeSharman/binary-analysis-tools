@@ -1,16 +1,19 @@
 module GUI.HexEditor where
 
-import BinaryEditor.BinaryEditor
+import BinaryEditor.BinaryFile
 import BitStream.HexDump
-
-import GUI.SectionEditor
+import GUI.RegionEditor
 
 import Graphics.UI.Gtk
 
 data HexEditor = HexEditor
-instance SectionEditor HexEditor where
+instance RegionEditor HexEditor where
+
+     -- This is here just for display purposes
      editorName _ = return "Hex"
 
+     -- Adds the "Hex" tag that provides custom
+     -- editting behaviour for Hex regions
      editorInit _ buffer = do
         tagTable <- textBufferGetTagTable buffer
         hexTag <- textTagNew (Just "Hex")

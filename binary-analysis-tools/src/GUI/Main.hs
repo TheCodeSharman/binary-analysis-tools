@@ -2,10 +2,10 @@ module GUI.Main where
 
 import Graphics.UI.Gtk
 
-import BinaryEditor.BinaryEditor
+import BinaryEditor.BinaryFile
 import BinaryEditor.UnknownBinaryFile
 
-import GUI.SectionEditor
+import GUI.RegionEditor
 import GUI.HexEditor 
   
 -- Create A View
