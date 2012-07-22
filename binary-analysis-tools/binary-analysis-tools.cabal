@@ -24,5 +24,9 @@ executable binary-analysis-tools
   ghc-options:     -Wall -fno-warn-unused-do-bind
   other-modules:   
                    GUI.Main,
-                   HexDump.HexDump
+                   BinaryEditor.BinaryEditor,
+                   BinaryEditor.UnknownBinaryFile,
+                   GUI.HexEditor,
+                   GUI.SectionEditor,
+                   BitStream.HexDump
 

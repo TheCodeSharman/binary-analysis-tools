@@ -6,7 +6,7 @@ module BitStream.BitStream (
     readASCIIString, readUnsignedInteger, readSignedInteger, isInputEmpty
   )  where
 
-import Data.ByteString.Lazy
+import Data.ByteString
 import Control.Monad.State
 import Data.Bits
 import Data.Word
