@@ -126,28 +126,28 @@
   <object class="GtkWindow" id="mainWindow">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Binary Analysis Tools</property>
-    <property name="window_position">center-always</property>
-    <property name="default_width">640</property>
-    <property name="default_height">480</property>
+    <property name="default_width">440</property>
+    <property name="default_height">250</property>
     <child>
-      <object class="GtkVBox" id="box1">
+      <object class="GtkVBox" id="mainContents">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkMenuBar" id="menubar1">
+          <object class="GtkMenuBar" id="menuBar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="ubuntu_local">True</property>
             <child>
               <object class="GtkMenuItem" id="menuFileItem">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">_File</property>
-                <property name="use_underline">True</property>
+                <property name="label" translatable="yes">File</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuFile">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="ubuntu_local">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="openFileMenuItem">
                         <property name="visible">True</property>
@@ -183,12 +183,12 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">_Help</property>
-                <property name="use_underline">True</property>
+                <property name="label" translatable="yes">Help</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuHelp">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="ubuntu_local">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="aboutMenuItem">
                         <property name="label">gtk-about</property>
@@ -221,6 +221,7 @@
                 <property name="related_action">openFileAction</property>
                 <property name="label" translatable="yes">Open</property>
                 <property name="use_underline">True</property>
+                <property name="stock_id">gtk-open</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -235,51 +236,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHPaned" id="hpaned1">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <child>
-              <object class="GtkScrolledWindow" id="scrolledwindow1">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="hscrollbar_policy">automatic</property>
-                <property name="vscrollbar_policy">automatic</property>
-                <child>
-                  <object class="GtkTextView" id="textview1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="resize">False</property>
-                <property name="shrink">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkScrolledWindow" id="scrolledwindow2">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="hscrollbar_policy">automatic</property>
-                <property name="vscrollbar_policy">automatic</property>
-                <child>
-                  <object class="GtkTextView" id="textview2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="resize">True</property>
-                <property name="shrink">True</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
+          <placeholder/>
         </child>
       </object>
     </child>

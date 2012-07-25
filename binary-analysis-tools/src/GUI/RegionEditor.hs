@@ -4,7 +4,8 @@ import BinaryEditor.BinaryFile
 import Graphics.UI.Gtk
 
 -- A RegionEditor maps events between a TextBuffer and the related
--- underlying BinaryFile
+-- underlying BinaryFile, there can be many regions in  single
+-- BinaryView.
 class RegionEditor a where
 
     -- A name to show in the context menus for this region type

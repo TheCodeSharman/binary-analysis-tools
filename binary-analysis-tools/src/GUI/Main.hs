@@ -2,51 +2,17 @@ module GUI.Main where
 
 import Graphics.UI.Gtk
 
-import BinaryEditor.BinaryFile
-import BinaryEditor.UnknownBinaryFile
 
-import GUI.RegionEditor
-import GUI.HexEditor 
 import GUI.TextEditor
-  
--- Create A View
---buildBinaryView :: Builder -> 
-  
--- Load a new file
-loadFile :: Builder -> String -> IO ()
-loadFile builder fileName = do
-    -- First text view
-    view <- builderGetObject builder castToTextView "textview1"
-    set view [ textViewEditable := False ]
-    
-    -- Load the binary file using the UnkownBinaryFile loader
-    binFile <- loadBinary fileName :: IO UnknownBinaryFile
-    
-    -- Create a new buffer and use the HexEditor to display
-    -- the first section of the file.
-    buffer <- textBufferNew Nothing
-    editorInit HexEditor buffer
-    start <- textBufferGetStartIter buffer
-    editorInsertAt HexEditor 
-        binFile (head $ getBinarySections binFile) 
-        buffer start 
-        
-    -- Attach the buffer to the view
-    textViewSetBuffer view buffer
-
-    -- Second text view: editable version of first
-    view2 <- builderGetObject builder castToTextView "textview2"
-    buffer2 <- textBufferNew Nothing
-    editorInit TextEditor buffer2
-    start2 <- textBufferGetStartIter buffer2
-    editorInsertAt TextEditor 
-        binFile (head $ getBinarySections binFile) 
-        buffer2 start2 
-    textViewSetBuffer view2 buffer2
+import GUI.BinaryEditorView
+import BinaryEditor.UnknownBinaryFile
 
 -- Configure the actions in the GUI      
 actionsSetup:: Builder -> IO Window
 actionsSetup builder = do
+    -- Create the BinaryEditorView
+    vbox <- builderGetObject builder castToVBox "mainContents"
+    binView <- binaryViewConstruct vbox :: IO (AttrBinaryView VBox UnknownBinaryFile)
     -- Open a file
     openFileAction <- builderGetObject builder castToAction "openFileAction"
     on openFileAction actionActivated $ do
@@ -56,7 +22,8 @@ actionsSetup builder = do
             then do
                 widgetHide fileChooserDialog
                 Just fileName <- fileChooserGetFilename fileChooserDialog
-                loadFile builder fileName
+                binaryViewOpenFile vbox binView fileName
+                binaryViewAddView TextEditor vbox binView
             else
                 widgetHide fileChooserDialog
 
@@ -90,6 +57,7 @@ runMainLoop = do
     initGUI
     builder <- loadUserInterface
     mainWindow <- actionsSetup builder
+
     -- Open the main window
     widgetShowAll mainWindow
     mainGUI

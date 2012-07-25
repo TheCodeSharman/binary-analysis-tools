@@ -29,5 +29,6 @@ executable binary-analysis-tools
                    BitStream.HexDump,
                    GUI.RegionEditor,
                    BinaryEditor.BinaryFile,
-                   GUI.TextEditor
+                   GUI.TextEditor,
+                   GUI.BinaryEditorView
 
