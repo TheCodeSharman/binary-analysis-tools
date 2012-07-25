@@ -1,4 +1,3 @@
-{-# LANGUAGE ExplicitForAll #-}
 {-
 The BinaryEditorView constructs a complex weave of
 RegionEditors, TextBuffers and TextViews that implement
